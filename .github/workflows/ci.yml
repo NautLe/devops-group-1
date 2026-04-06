@@ -25,8 +25,7 @@ services:
   ports:
   - 5432:5432
 # This health check ensures the DB is ready before tests run
-  options: --health-cmd pg_isready --healthinterval 10s --health-timeout 5s --health-retries 5
-steps:
+  options: --health-cmd pg_isready --healthinterval 10s --health-timeout 5s --health-retries 5steps:
   # Step 1: Get our project code onto the runner
   - name: Checkout code
     uses: actions/checkout@v3

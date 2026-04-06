@@ -8,7 +8,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-// ✅ FIX #1: Correct DB password (must match docker-compose)
+//  Correct DB password (must match docker-compose)
 const pool = new Pool({
    user: process.env.DB_USER || 'myuser',
    host: process.env.DB_HOST || 'postgres',
@@ -17,7 +17,7 @@ const pool = new Pool({
    port: process.env.DB_PORT || 5432,
 });
 
-// ✅ Add root route (fix "Cannot GET /")
+//  Add root route (fix "Cannot GET /")
 app.get('/', (req, res) => {
    res.send('Backend is running 🚀');
 });
@@ -36,7 +36,7 @@ app.get('/api/todos', async (req, res) => {
    }
 });
 
-// ✅ FIX #2: Validation added
+//   Validation added
 app.post('/api/todos', async (req, res) => {
    try {
       const { title, completed = false } = req.body;
@@ -56,7 +56,7 @@ app.post('/api/todos', async (req, res) => {
    }
 });
 
-// ✅ FIX #3: DELETE endpoint
+//  DELETE endpoint
 app.delete('/api/todos/:id', async (req, res) => {
    try {
       const { id } = req.params;
@@ -76,7 +76,7 @@ app.delete('/api/todos/:id', async (req, res) => {
    }
 });
 
-// ✅ FIX #4: PUT endpoint
+//  PUT endpoint
 app.put('/api/todos/:id', async (req, res) => {
    try {
       const { id } = req.params;
@@ -103,12 +103,12 @@ app.put('/api/todos/:id', async (req, res) => {
 
 const port = process.env.PORT || 8080;
 
-// ✅ FIX #5: Prevent server start in test mode
+//  Prevent server start in test mode
 if (process.env.NODE_ENV !== 'test') {
    app.listen(port, () => {
       console.log(`Backend running on port ${port}`);
    });
 }
 
-// ✅ FIX #6: Export app for testing
+//  Export app for testing
 module.exports = app;

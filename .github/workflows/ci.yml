@@ -2,8 +2,7 @@ name: CI Pipeline
 # This workflow runs on two triggers:
 # 1. When code is pushed to the 'main' branch.
 
-# 2. When a Pull Request is opened/updated against the 'main'
-branch
+# 2. When a Pull Request is opened/updated against the 'main' branch
 on:
 push:
 branches: [ main ]

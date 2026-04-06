@@ -29,18 +29,17 @@ jobs:
           --health-interval 10s      
           --health-timeout 5s
           --health-retries 5
-
+ 
     steps:
       # Step 1: Get our project code onto the runner
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Step 2: Install Node.js v18
       - name: Setup Node.js        
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'             # Caches npm packages for faster builds
 
       # Step 3: Install our app's dependencies
       - name: Install dependencies # 

@@ -71,16 +71,15 @@ jobs:
       # =========================
       # 🚀 BUILD & PUSH IMAGE
       # =========================
-      - name: Build and push Docker image
+       - name: Build and push Docker image
         if: github.event_name == 'push'
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}nghi2405/devops:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops-group-1:latest
 
-
-            deploy:
+  deploy:
     name: Deploy to Server
     runs-on: ubuntu-latest
     needs: build-and-test
@@ -94,14 +93,9 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Pull latest image
-            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/devops:latest
-
-            # Stop old container (if exists)
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/devops-group-1:latest
             docker stop devops-container || true
             docker rm devops-container || true
-
-            # Run new container
             docker run -d \
               --name devops-container \
               -p 80:3000 \

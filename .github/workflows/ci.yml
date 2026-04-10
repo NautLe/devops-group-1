@@ -50,9 +50,9 @@ jobs:
         env:
           DB_HOST: localhost
           DB_PORT: 5432
-          DB_USER: myuser
-          DB_PASSWORD: mypass
-          DB_NAME: mydatabase
+          DB_USER: tododb
+          DB_PASSWORD: postgres
+          DB_NAME: password
 
       - name: Log in to Docker Hub
         if: github.event_name == 'push'
@@ -80,17 +80,12 @@ jobs:
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
+          username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
           script: |
-            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/devops-group-1:latest
-            docker stop devops-container || true
-            docker rm devops-container || true
-            docker run -d \
-              --name devops-container \
-              -p 80:3000 \
-              -e DB_HOST=${{ secrets.DB_HOST }} \
-              -e DB_USER=${{ secrets.DB_USER }} \
-              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-              -e DB_NAME=${{ secrets.DB_NAME }} \
-              ${{ secrets.DOCKER_HUB_USERNAME }}/devops-group-1:latest
+            cd devops-group-1-main || git clone https://github.com/NautLe/devops-group-1.git
+            cd devops-group-1-main
+            git pull
+            docker-compose down
+            docker-compose up -d --build

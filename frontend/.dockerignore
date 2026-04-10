@@ -1,38 +1,11 @@
-# Dependencies - installed inside the container
-node_modules
-
-# Build output - built inside the container
-build
-
-# Git files
-.git
-.gitignore
-
-# Docker files
-Dockerfile
-.dockerignore
-
-# Local environment files
+# Ignore the local dependencies, we will install them INSIDE the 
+container 
+node_modules 
+# Ignore Git files 
+.git .gitignore 
+# Ignore Docker files 
+Dockerfile 
+.dockerignore 
+docker-compose.yml 
+# Ignore local environment files 
 .env
-.env.local
-.env.development
-.env.test
-.env.production
-
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Editor / IDE files
-.vscode
-.idea
-*.swp
-*.swo
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Testing
-coverage

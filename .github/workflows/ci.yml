@@ -71,7 +71,10 @@ jobs:
       # =========================
       # 🚀 BUILD & PUSH IMAGE
       # =========================
-       - name: Build and push Docker image
+        # =========================
+      # 🚀 BUILD & PUSH IMAGE
+      # =========================
+      - name: Build and push Docker image
         if: github.event_name == 'push'
         uses: docker/build-push-action@v4
         with:

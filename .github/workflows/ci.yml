@@ -73,24 +73,20 @@ jobs:
     if: github.event_name == 'push'
 
     steps:
-      - name: Deploy via SSH (Docker Compose)
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SSH_HOST }}
-          username: root
+          username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
           script: |
-            # Clone repo if not exists
-            if [ ! -d "devops-group-1" ]; then
-              git clone https://github.com/${{ github.repository }}.git
-            fi
-
             cd devops-group-1
+            
+            # Kill anything on port 8080 before bringing up new containers
+            docker-compose down --remove-orphans
+            docker ps -q --filter "publish=8080" | xargs -r docker stop
+            docker ps -aq --filter "publish=8080" | xargs -r docker rm
 
-            # Pull latest code
-            git pull
-
-            # Rebuild & restart containers
-            docker-compose down
+            docker system prune -f
+            docker-compose pull    
             docker-compose up -d --build

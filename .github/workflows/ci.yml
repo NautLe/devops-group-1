@@ -78,7 +78,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-         script: |
+          script: |
             cd /root/devops-group-1
             git pull --rebase origin main
             docker compose down

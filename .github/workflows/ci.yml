@@ -79,7 +79,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /var/www/DevOps
+            whoami
+            hostname
+            cd /root/devops-group-1
             git pull origin main
             docker-compose pull
             docker-compose up -d

@@ -78,10 +78,9 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          script: |
-            whoami
-            hostname
+         script: |
             cd /root/devops-group-1
-            git pull origin main
-            docker-compose pull
-            docker-compose up -d
+            git pull --rebase origin main
+            docker compose down
+            docker compose pull
+            docker compose up -d

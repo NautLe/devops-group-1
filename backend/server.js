@@ -17,7 +17,6 @@ const pool = new Pool({
   port: process.env.DB_PORT || 5432,
 });
 
-// ✅ INIT DB (đảm bảo chạy trước request)
 let dbReady = false;
 
 const initDB = async () => {

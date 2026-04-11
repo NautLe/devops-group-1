@@ -73,20 +73,14 @@ jobs:
     if: github.event_name == 'push'
 
     steps:
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v0.1.10
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd devops-group-1
-            
-            # Kill anything on port 8080 before bringing up new containers
-            docker-compose down --remove-orphans
-            docker ps -q --filter "publish=8080" | xargs -r docker stop
-            docker ps -aq --filter "publish=8080" | xargs -r docker rm
-
-            docker system prune -f
-            docker-compose pull    
-            docker-compose up -d --build
+            cd /var/www/DevOps
+            sudo git pull origin main
+            sudo docker-compose pull
+            sudo docker-compose up -d
